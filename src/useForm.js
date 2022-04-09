@@ -3,6 +3,13 @@ import validate from "./validateInfo";
 import axios from "axios";
 
 const useForm = () => {
+  const clearForm = () => {
+    document.getElementById("Name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("pass").value = "";
+    document.getElementById("confPass").value = "";
+    document.getElementById("phone").value = "";
+  };
   const [values, setValues] = useState({
     Name: "",
     email: "",
@@ -10,9 +17,9 @@ const useForm = () => {
     confPass: "",
     phone: "",
   });
-  
-  const [errors, setErrors] = useState({});
 
+  const [errors, setErrors] = useState({});
+  // const [storeError, setErrosStore] = useState({});
   const data = {
     name: `${values.Name}`,
     email: `${values.email}`,
@@ -23,36 +30,11 @@ const useForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors(validate(values));
+    setErrors(validate(values)); 
     console.log(values);
-    if (!values.Name) {
-      errors.Name = "*User Name is required*";
-    } else if (values.Name.length < 8) {
-      errors.Name = "*Name needs to be 8 characters or more*";
-    } else if (!values.email) {
-      errors.email = "*Email required*";
-    } else if (!/\S+@\S+\.\S+/.test(values.email)) {
-      errors.email = "Email address is invalid";
-    } else if (!values.pass) {
-      errors.pass = "*Password is required*";
-    } else if (
-      !new RegExp(
-        "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#%&])(?=.{8,})"
-      ).test(values.pass)
-    ) {
-      errors.pass = "*Password must be strong*";
-    } else if (!values.confPass) {
-      errors.confPass = "*Confirm Password is required*";
-    } else if (values.pass !== values.confPass) {
-      errors.confPass = "*Passwords do not match*";
-    } else if (!values.phone) {
-      errors.phone = "*Phone number is required*";
-    } else if (values.phone.length !== 10) {
-      errors.phone = "*Invalid Phone Number*";
-    }
-    else {
-      axios.post(`https://624fd248f0ae10a8ea4f8949.mockapi.io/form`,data)
-    }
+    axios
+      .post(`https://624fd248f0ae10a8ea4f8949.mockapi.io/form`, data)
+      // .then(clearForm);
   };
 
   const handleChange = (e) => {

@@ -1,12 +1,11 @@
 import "./App.css";
-import FormSIgnUp from "./FormSIgnUp";
+import NewForm from "./newForm";
 
 function App() {
  
-
   return (
     <div >
-      <FormSIgnUp />
+      <NewForm />
     </div>
   );
 }
